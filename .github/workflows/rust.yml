@@ -2,29 +2,28 @@ name: Rust
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-    - name: Setup cross
-      run: cargo install cross
-    - name: Build
-      run: cross build --verbose --release --target=i686-pc-windows-gnu
-    - name: Output
-      uses: actions/upload-artifact@v2
-      with:
-        name: out.exe
-        path: ./target/i686-pc-windows-gnu/release/test-actions-rust-cross.exe
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Setup mingw
+        run: sudo apt-get install --no-install-recommends -y mingw-w64 && rustup target add i686-pc-windows-gnu
+      - name: Build
+        run: cargo build --verbose --release --target=i686-pc-windows-gnu
+      - name: Output
+        uses: actions/upload-artifact@v2
+        with:
+          name: out.exe
+          path: ./target/i686-pc-windows-gnu/release/test-actions-rust-cross.exe
