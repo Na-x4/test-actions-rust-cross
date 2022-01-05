@@ -19,7 +19,11 @@ jobs:
         with:
           toolchain: stable
       - name: Setup mingw
-        run: sudo apt-get install --no-install-recommends -y mingw-w64 && rustup target add i686-pc-windows-gnu
+        run: |+
+          sudo apt-get update
+          && sudo apt-get install --no-install-recommends -y
+            mingw-w64
+          && rustup target add i686-pc-windows-gnu
       - name: Build
         run: cargo build --verbose --release --target=i686-pc-windows-gnu
       - name: Output
