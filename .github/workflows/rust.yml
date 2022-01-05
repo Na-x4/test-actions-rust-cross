@@ -22,7 +22,7 @@ jobs:
     - uses: actions-rs/cargo@v1.0.1
       with:
         command: build
-        args: --verbose --release --target=i686-pc-windows-gnu
+        args: --verbose --release --target=i686-pc-windows-gnu -C panic=abort
         use-cross: true
     - name: Output
       uses: actions/upload-artifact@v2
