@@ -22,10 +22,10 @@ jobs:
     - uses: actions-rs/cargo@v1.0.1
       with:
         command: build
-        args: --verbose --release --target=i686-pc-windows-gnu -C panic=abort
+        args: --verbose --release --target=x86_64-pc-windows-gnu
         use-cross: true
     - name: Output
       uses: actions/upload-artifact@v2
       with:
         name: out.exe
-        path: ./target/i686-pc-windows-gnu/release/test-actions-rust-cross.exe
+        path: ./target/x86_64-pc-windows-gnu/release/test-actions-rust-cross.exe
