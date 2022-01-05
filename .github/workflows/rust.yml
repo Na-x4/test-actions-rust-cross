@@ -19,10 +19,11 @@ jobs:
     - uses: actions-rs/toolchain@v1
       with:
         toolchain: stable
-    - name: Build
-      run: cargo build --verbose --target=i686-pc-windows-gnu
-    - name: Run tests
-      run: cargo test --verbose
+    - uses: actions-rs/cargo@v1.0.1
+      with:
+        command: build
+        args: --verbose --release --target=i686-pc-windows-gnu
+        use-cross: true
     - name: Output
       uses: actions/upload-artifact@v2
       with:
