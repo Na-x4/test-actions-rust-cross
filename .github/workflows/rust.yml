@@ -16,10 +16,12 @@ jobs:
       image: rust
 
     steps:
+      - uses: actions/checkout@v2
       - name: Setup mingw
         run: >
-          sudo apt-get update
-          && sudo apt-get install --no-install-recommends -y
+          export DEBIAN_FRONTEND=noninteractive
+          && apt-get update
+          && apt-get install --no-install-recommends -y
           mingw-w64
           && rustup target add i686-pc-windows-gnu
       - name: Build
