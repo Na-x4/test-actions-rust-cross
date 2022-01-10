@@ -27,3 +27,8 @@ jobs:
           use-cross: true
           command: build
           args: --release --target=i686-pc-windows-gnu
+      - name: Output
+        uses: actions/upload-artifact@v2
+        with:
+          name: out.exe
+          path: ./target/i686-pc-windows-gnu/release/test-actions-rust-cross.exe
