@@ -1,3 +1,6 @@
+# We could use `@actions-rs/cargo` Action ability to automatically install `cross` tool
+# in order to compile our application for some unusual targets.
+
 name: Rust
 
 on:
@@ -11,23 +14,16 @@ env:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
-    container:
-      image: rust
 
     steps:
       - uses: actions/checkout@v2
-      - name: Setup mingw
-        run: >
-          export DEBIAN_FRONTEND=noninteractive
-          && apt-get update
-          && apt-get install --no-install-recommends -y
-          mingw-w64
-          && rustup target add i686-pc-windows-gnu
-      - name: Build
-        run: cargo build --verbose --release --target=i686-pc-windows-gnu
-      - name: Output
-        uses: actions/upload-artifact@v2
+      - uses: actions-rs/toolchain@v1
         with:
-          name: out.exe
-          path: ./target/i686-pc-windows-gnu/release/test-actions-rust-cross.exe
+          toolchain: stable
+      - uses: actions-rs/cargo@v1
+        with:
+          use-cross: true
+          command: build
+          args: --release --target=i686-pc-windows-gnu
